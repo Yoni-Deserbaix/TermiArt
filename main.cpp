@@ -15,7 +15,7 @@ int main()
     //Paramètres
 
     // Chemin du fichier image
-    char * sNomFichier  = "C:\\YOUR FILE PPM" ;
+    char * sNomFichier  = "C:\\YOUR FILE PPM" ; // Select your file ppm
 
     // Variables pour stocker les dimensions de l'image
     unsigned int wHauteur (0) ;
