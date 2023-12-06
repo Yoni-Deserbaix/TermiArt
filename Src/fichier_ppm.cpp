@@ -1,262 +1,206 @@
-#include "fichier_ppm.h"
-#include<fstream>
-#include<iostream>
-#include<cstring>
+#include <fstream>
+#include <iostream>
+#include <cstring>
 
-#define ROUGE (0x00FF0000) // Rouge
-#define BLEU (0x000000FF) // Bleu
-#define VERT (0x0000FF00) // Vert
+#define RED (0x00FF0000) // RED
+#define BLUE (0x000000FF) // BLUE
+#define GREEN (0x0000FF00) // Green
 
-#define BLANC (0x00FFFFFF) // Blanc
-#define ROUGEFONCE (0x007D0404) // Rouge foncé
+#define WHITE (0x00FFFFFF) // WHITE
+#define DARK_RED (0x007D0404) // Dark Red
 
+using namespace std;
 
-using namespace std ;
-
-
-// (1) Vérifie si le fichier est bien au format PPM, RVB 255.
-bool EstPPM_RVB(char * sNomImage)
+bool IsPPM_RGB(char *imageName)
 {
-    bool bEstPPM (false) ;
-    bool bVerifierP3 (false) ;
-    bool bVerifierNbre (false) ;
-    char tampon[71] ;
+    bool isPPM(false);
+    bool checkP3(false);
+    bool checkNumber(false);
+    char buffer[71];
 
-    // Declaration de l'objet fstream puis ouverture
-    fstream monFichier (sNomImage, ios::in);
+    fstream myFile(imageName, ios::in);
 
-    // Verifier si l'image existe
-    if(!monFichier)
+    if (!myFile)
     {
-        cout << "Erreur d'ouverture de fichier \" " << sNomImage <<" \""<< endl << endl ;
-        exit(-1) ;
+        cout << "Error opening file \" " << imageName << " \"" << endl << endl;
+        exit(-1);
     }
     else
     {
-        cout << "Le fichier \" "<< sNomImage << " \" a ete ouvert avec succes" << endl << endl ;
+        cout << "The file \" " << imageName << " \" has been successfully opened" << endl << endl;
     }
 
-    // Lecture de la première ligne
-    monFichier.getline(tampon, 71, '\n') ;
-    if((tampon[0] == 'P') && (tampon[1] == '3'))
+    myFile.getline(buffer, 71, '\n');
+    if ((buffer[0] == 'P') && (buffer[1] == '3'))
     {
-        bVerifierP3 = true ;
+        checkP3 = true;
     }
 
-    // Lecture des lignes 2, 3, 4
-    for (int i (0); i < 3; ++i)
-   {
-       monFichier.getline(tampon, 71, '\n');
-   }
+    for (int i(0); i < 3; ++i) {
+        myFile.getline(buffer, 71, '\n');
+    }
 
-    // Lecture de la cinquième ligne
-    if((tampon[0] == '2') && (tampon[1] == '5') && (tampon[2] == '5'))
+    if ((buffer[0] == '2') && (buffer[1] == '5') && (buffer[2] == '5'))
     {
-        bVerifierNbre = true ;
+        checkNumber = true;
     }
 
-   /* monFichier.getline(tampon, 71, '\n') ;*/
-    if((bVerifierP3 == true) && (bVerifierNbre == true))
+    if ((checkP3 == true) && (checkNumber == true))
     {
-        bEstPPM = true ;
+        isPPM = true;
     }
 
-    // Fermeture du fichier
-    monFichier.close() ;
+    myFile.close();
 
-    return bEstPPM ;
+    return isPPM;
 }
 
-
-// (2) Procédure qui retourne les dimensions wHauteur et wLargeur de l’image.
-void LirePPM_Dimensions( char * sNomImage,
-                        unsigned int & wHauteur,
-                        unsigned int & wLargeur)
+void ReadPPM_Dimensions(char *imageName, unsigned int &height, unsigned int &width)
 {
-    char tampon[71] ;
+    char buffer[71];
 
-    // Declaration de l'objet fstream puis ouverture
-    fstream monFichier (sNomImage, ios::in);
+    fstream myFile(imageName, ios::in);
 
-    // Verifier si l'image existe
-    if(!monFichier)
+    if (!myFile)
     {
-        cout << "Erreur d'ouverture de fichier" << sNomImage << endl ;
-        exit(-1) ;
+        cout << "Error opening file " << imageName << endl;
+        exit(-1);
     }
 
-    // Lecture de la ligne 3 (8 8)
-    monFichier.getline(tampon, 71, '\n') ;
-    monFichier.getline(tampon, 71, '\n') ;
+    myFile.getline(buffer, 71, '\n');
+    myFile.getline(buffer, 71, '\n');
 
-    // Lecture des dimensions de l'image
-    monFichier >> wHauteur >> wLargeur ;
+    myFile >> height >> width;
 
-    // Affichage des dimensions de l'image
-    cout << "L'image a une dimension de : " << wHauteur << " x " << wLargeur << " pixels." << endl ;
+    cout << "The image has dimensions: " << height << " x " << width << " pixels." << endl;
 
-    //Fermeture du fichier
-    monFichier.close() ;
+    myFile.close();
 }
 
-// (3) Fonction qui verifie si les dimensions de l’image sont identiques
-bool EstDeTaille ( char * sNomImage,
-                 unsigned int wHauteur,
-                 unsigned int wLargeur)
+bool IsSameSize(char *imageName, unsigned int height, unsigned int width)
 {
-    bool bRetourTaille (false) ;
-    unsigned int wHauteurAttendue (0) ;
-    unsigned int wLargeurAttendue (0) ;
+    bool isSameSize(false);
+    unsigned int expectedHeight(0);
+    unsigned int expectedWidth(0);
 
-    // Vérifier si les dimensions correspondent à celles requises
-    if (wHauteur == wHauteurAttendue && wLargeur == wLargeurAttendue)
+    if (height == expectedHeight && width == expectedWidth)
     {
-        bRetourTaille = true;
-        cout << "Les dimensions de l'image sont identiques. (" << bRetourTaille << ")" << endl ;
+        isSameSize = true;
+        cout << "The image dimensions are identical. (" << isSameSize << ")" << endl;
     }
     else
     {
-        bRetourTaille = false;
-        cout << "Les dimensions de l'image ne sont pas identiques. (" << bRetourTaille << ")" << endl ;
+        isSameSize = false;
+        cout << "The image dimensions are not identical. (" << isSameSize << ")" << endl;
     }
 
-    return (bRetourTaille) ;
+    return isSameSize;
 }
 
-// (4) Fonction pour créer un tableau dynamique à deux dimensions
-unsigned int * * CreerTableau2D(unsigned int wHauteur, unsigned int wLargeur)
+unsigned int **Create2DArray(unsigned int height, unsigned int width)
 {
-    // Création du tableau à deux dimensions
-    unsigned int * * wTab (nullptr) ;
-    wTab = new unsigned int * [wHauteur] ;
+    unsigned int **array(nullptr);
+    array = new unsigned int *[height];
 
-    for (unsigned int i (0); i < wHauteur; ++i)
+    for (unsigned int i(0); i < height; ++i)
     {
-        wTab[i] = new unsigned int [wLargeur] ;
+        array[i] = new unsigned int[width];
     }
 
-    // Desalllocation de la mémoire mais pas besoin pour l'instant
-//    if (wTab != nullptr)
-//    {
-//        CreerTabIeau2D(wTab, wHauteur, wLargeur) ;
-//        delete [] wTab ;
-//        wTab = nullptr ;
-//    }
-    return wTab; // Retourne le tableau alloué dynamiquement
+    return array;
 }
 
-// (5) Fonction pour combiner les composantes RVB dans un seul entier
-unsigned int RVB(unsigned int wR, unsigned int wV, unsigned int wB)
+unsigned int RGB(unsigned int red, unsigned int green, unsigned int blue)
 {
-    unsigned int wRvb (0) ;
+    unsigned int rgb(0);
 
-    // Vérifier si les couleurs sont inférieurs à 255
-    if (wR <= 255 && wV <= 255 && wB <= 255)
+    if (red <= 255 && green <= 255 && blue <= 255)
     {
-        // Combinaison des valeurs RVB dans un seul entier en utilisant des décalages bit à bit
-        wRvb = wRvb | (wR << 16) ; // Ajoute la composante rouge (décalage 16 bits)
-        wRvb = wRvb | (wV << 8) ;  // Ajoute la composante verte (décalage 8 bits)
-        wRvb = wRvb | (wB) ;       // Ajoute la composante bleue (pas de décalage)
+        rgb = rgb | (red << 16);
+        rgb = rgb | (green << 8);
+        rgb = rgb | (blue);
     }
-    return (wRvb) ;
+    return rgb;
 }
 
-// (6) Fonction qui lit les valeurs RVB depuis le fichier PPM
-void LireImagePPM (char * sNomImage,
-                   unsigned int * * wTab,
-                   unsigned int wHauteur,
-                   unsigned wLargeur)
+void ReadImagePPM(char *imageName, unsigned int **wTab, unsigned int height, unsigned int width)
 {
-    char tampon[71] ;
-    unsigned int wRouge(0);
-    unsigned int wVert(0) ;
-    unsigned int wBleu(0) ;
-    unsigned int wRvb(0) ;
-    ifstream monFichier(sNomImage, ios::in) ;
+    char buffer[71];
+    unsigned int red(0);
+    unsigned int green(0);
+    unsigned int blue(0);
+    unsigned int rgb(0);
+    ifstream myFile(imageName, ios::in);
 
-       // Lecture des; lignes 1, 2, 3
-       for (int i (0); i <= 3; ++i)
-       {
-           monFichier.getline(tampon, 71, '\n') ;
-       }
+    for (int i(0); i <= 3; ++i)
+    {
+        myFile.getline(buffer, 71, '\n');
+    }
 
-       // Boucle pour lire les valeurs RVB de chaque pixel
-       for (unsigned int i = 0; i < wHauteur; ++i)
-       {
-           for (unsigned int j = 0; j < wLargeur; ++j)
-           {
-               // Lecture des couleurs
-               monFichier >> wRouge >> wVert >> wBleu ;
-
-               // Appel de la fonction RVB
-               wRvb = RVB(wRouge, wVert, wBleu) ;
-
-               // Stockage des valeurs RVB dans le tableau
-               wTab[i][j] = wRvb  ;
-           }
-       }
-       monFichier.close();
+    for (unsigned int i = 0; i < height; ++i)
+    {
+        for (unsigned int j = 0; j < width; ++j)
+        {
+            myFile >> red >> green >> blue;
+            rgb = RGB(red, green, blue);
+            wTab[i][j] = rgb;
+        }
+    }
+    myFile.close();
 }
 
-void AfficherCouleur(unsigned int couleur)
+void DisplayColor(unsigned int color)
 {
-    if (couleur == ROUGE)
+    if (color == RED)
     {
-        cout << "\033[31m.\033[0m "; // Rouge
-    } else if (couleur == ROUGEFONCE)
+        cout << "\033[31m.\033[0m "; // RED
+    } else if (color == DARK_RED)
     {
-        cout << "\033[31;2m.\033[0m "; // Rouge foncé
-    } else if (couleur == BLANC)
+        cout << "\033[31;2m.\033[0m "; // Dark Red
+    } else if (color == WHITE)
     {
-        cout << "\033[37m.\033[0m "; // Blanc
-    } // Ajouter d'autres couleurs si nécessaire
-    else
+        cout << "\033[37m.\033[0m "; // WHITE
+    } else
     {
-        cout << " "; // Couleur par défaut ou non reconnue
+        cout << " ";
     }
 }
 
-// (7) Fonction pour afficher l'image à partir du tableau wTab
-void AfficherImage(unsigned int * * wTab, unsigned int wHauteur, unsigned int wLargeur)
+void DisplayImage(unsigned int **wTab, unsigned int height, unsigned int width)
 {
-   // Boucle pour lire les valeurs RVB de chaque pixel
-   for (unsigned int i = 0; i < wHauteur; ++i)
-   {
-       for (unsigned int j = 0; j < wLargeur; ++j)
-       {
-           AfficherCouleur(wTab[i][j]);
-          }
-          cout << endl;
-   }
+    for (unsigned int i = 0; i < height; ++i)
+    {
+        for (unsigned int j = 0; j < width; ++j)
+        {
+            DisplayColor(wTab[i][j]);
+        }
+        cout << endl;
+    }
 }
 
-// (8)
-unsigned int * * LibererTab2D( unsigned int ** wTab,
-                            unsigned int wHauteur,
-                            unsigned int wLargeur)
+unsigned int **Free2DArray(unsigned int **wTab, unsigned int height, unsigned int width)
 {
-
-   if(wTab != nullptr)
-   {
-       for (unsigned int i (0); i < wHauteur; ++i)
-       {
-           for(unsigned int j (0); j < wLargeur; ++i)
-           {
-               wTab[i][j] = 0 ;
-           }
-       }
-
-    for (unsigned int i (0); i < wHauteur; ++i)
+    if (wTab != nullptr)
     {
-       if(wTab[i] != nullptr)
-       {
-           delete [] wTab[i] ;
-           wTab = nullptr ;
-       }
-    }
-    delete [] wTab ;
-    wTab = nullptr ;
-   }
+        for (unsigned int i(0); i < height; ++i)
+        {
+            for (unsigned int j(0); j < width; ++j)
+            {
+                wTab[i][j] = 0;
+            }
+        }
 
-   return wTab;
+        for (unsigned int i(0); i < height; ++i)
+        {
+            if (wTab[i] != nullptr)
+            {
+                delete[] wTab[i];
+                wTab = nullptr;
+            }
+        }
+        delete[] wTab;
+        wTab = nullptr;
+    }
+
+    return wTab;
 }

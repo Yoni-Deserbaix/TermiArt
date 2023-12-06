@@ -1,67 +1,67 @@
-#include"fichier_ppm.h"
+#include "fichier_ppm.h"
 #include <iostream>
-#include<fstream>
+#include <fstream>
 
-using namespace std ;
+using namespace std;
 
 int main()
 {
-    //Retour
-    bool bVerfifierFichier (false) ;
-    bool bVerifierDimensions (false) ;
-    unsigned int wResultatRVB(0) ;
-    unsigned int * * tabLogo (nullptr) ;
+    // Return
+    bool isFileVerified(false);
+    bool areDimensionsVerified(false);
+    unsigned int resultRGB(0);
+    unsigned int **logoArray(nullptr);
 
-    //Paramètres
+    // Parameters
 
-    // Chemin du fichier image
-    char * sNomFichier  = "C:\\YOUR FILE PPM" ; // Select your file ppm
+    // Image file path
+    char *fileName = "C:\\YOUR FILE PPM"; // Select your file ppm
 
-    // Variables pour stocker les dimensions de l'image
-    unsigned int wHauteur (0) ;
-    unsigned int wLargeur (0) ;
+    // Variables to store image dimensions
+    unsigned int height(0);
+    unsigned int width(0);
 
-    // Dimensions attendues de l'image
-    unsigned int wHauteurAttendue (0) ;
-    unsigned int wLargeurAttendue (0) ;
+    // Expected dimensions of the image
+    unsigned int expectedHeight(0);
+    unsigned int expectedWidth(0);
 
 
-    unsigned int wRouge (0) ;
-    unsigned int wVert = (0) ;
-    unsigned int wBleu = (0) ;
+    unsigned int red(0);
+    unsigned int green = (0);
+    unsigned int blue = (0);
 
-    //Appel fonction/procédures
+    // Function/procedure calls
 
-    // Vérification du format de l'image
-    bVerfifierFichier = EstPPM_RVB(sNomFichier) ;
+    // Verify image format
+    isFileVerified = IsPPM_RGB(fileName);
 
-    if (bVerfifierFichier == true)
-       {
-           cout << "Le fichier est au format PPM, RVB 255. (" << bVerfifierFichier << ")." << endl;
+    if (isFileVerified == true)
+    {
+        cout << "The file is in PPM format, RGB 255. (" << isFileVerified << ")." << endl;
 
-           // Lecture des dimensions de l'image
-           LirePPM_Dimensions(sNomFichier, wHauteur, wLargeur) ;
+        // Read image dimensions
+        ReadPPM_Dimensions(fileName, height, width);
 
-           // Vérification si les dimensions correspondent à celles attendues
-           bVerifierDimensions = EstDeTaille(sNomFichier,wHauteurAttendue,wLargeurAttendue) ;
+        // Check if the dimensions match the expected ones
+        areDimensionsVerified = IsSameSize(fileName, expectedHeight, expectedWidth);
 
-           if (bVerifierDimensions == true)
-            {
-                // Création du tableau
-                tabLogo = CreerTableau2D(wHauteur, wLargeur);
+        if (areDimensionsVerified == true)
+        {
+            // Create the array
+            logoArray = Create2DArray(height, width);
 
-                // Appel de la fonction RVB
-                wResultatRVB = RVB(wRouge, wVert, wBleu) ;
+            // Call the RGB function
+            resultRGB = RGB(red, green, blue);
 
-                // Lecture de l'image
-                LireImagePPM(sNomFichier, tabLogo, wHauteur, wLargeur) ;
+            // Read the image
+            ReadImagePPM(fileName, logoArray, height, width);
 
-                // Affichage de l'image
-                AfficherImage(tabLogo, wHauteur, wLargeur) ;
+            // Display the image
+            DisplayImage(logoArray, height, width);
 
-                // Destruction du tableau
-                LibererTab2D(tabLogo, wHauteur, wLargeur) ;
-            }
+            // Free the array
+            Free2DArray(logoArray, height, width);
+        }
     }
 
     return 0;
