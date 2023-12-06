@@ -21,8 +21,10 @@ This program offers the following capabilities :
 
 ## Technologies Used
 The project was developed using the following technologies:
-- C++
-- QTCreator
+- C++   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" height="15" alt="cplusplus logo"  />
+
+- QTCreator   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/qt/qt-original.svg" height="15" alt="qt logo"  />
+
 
 ## Project Structure 📁
 
@@ -35,23 +37,27 @@ The project structure is organized as follows:
 
 ## Usage 🛠️
 
-1. Clone this GitHub repository into your development environment.
+1. Clone the repository to your local machine   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" height="15" alt="git logo"  /> :
+    ```bash
+    git clone https://github.com/YD-SavvyDev/TermiArt.git
+    ```
 2. Ensure you have installed a plugin or feature in your IDE that allows reading QStrings from the Qt framework.
-3. Add your .ppm format image to the project folder.
+3. Add your .ppm format image to the project folder. 
+</br>
 4. Open the main.cpp file and modify the sNomFichier variable with the path to your .ppm image:
 
 ```cpp
 char * sNomFichier  = "C:\\YOUR FILE .PPM" ; // Select your .ppm file
 ```
 
-Define your colors according to your image.
+5. Define your colors according to your image.
 
 ```cpp
 #define • COLOR (0x000000) // YOUR HEXA CODE COLOR
 #define ...
 #define ...
 ```
-Modify this function
+7. Modify this function
 
 ```cpp
 void DisplayColor(unsigned int color)
@@ -70,10 +76,11 @@ void DisplayColor(unsigned int color)
     }
 }
 ```
+8. Run the program ! 
 ## Skills Gained 🌟
 Developing this project provided an opportunity to enhance proficiency in :
 
-- Software development
+- Software development 
 - Memory management, dynamic allocation
 - Basic input and output streams : files
 - Data structure and management : Binary file formats
