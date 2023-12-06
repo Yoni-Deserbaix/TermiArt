@@ -68,7 +68,7 @@ void DisplayColor(unsigned int color)
     } 
     else if (color == ...)
     {
-        cout << "\............. "; // YOUR COLOR CODE
+        cout << "\............. "; // YOUR ANSI escape code
     } 
     else
     {
