@@ -6,7 +6,7 @@ The TermiArt project was developed as part of my computer science education at a
 
 This program offers the following capabilities :
 
-- Read and display .ppm images: The program is designed to read images with the .ppm extension and display them in a terminal.
+- Read and display .ppm images: The program is designed to read images with the [PPM](https://fr.wikipedia.org/wiki/Portable_pixmap) extension and display them in a terminal.
 - True color display: An additional feature has been added to display real colors in the terminal using [ANSI](https://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html) escape sequences.
 
 ## Screenshots 📸
