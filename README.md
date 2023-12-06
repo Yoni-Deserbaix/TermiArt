@@ -44,10 +44,10 @@ The project structure is organized as follows:
 2. Ensure you have installed a plugin or feature in your IDE that allows reading QStrings from the Qt framework.
 3. Add your .ppm format image to the project folder. 
 </br>
-4. Open the main.cpp file and modify the sNomFichier variable with the path to your .ppm image:
+4. Open the main.cpp file and modify the fileName variable with the path to your .ppm image:
 
 ```cpp
-char * sNomFichier  = "C:\\YOUR FILE .PPM" ; // Select your .ppm file
+char * fileName  = "C:\\YOUR FILE .PPM" ; // Select your .ppm file
 ```
 
 5. Define your colors according to your image.
