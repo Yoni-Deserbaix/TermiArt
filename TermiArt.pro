@@ -10,7 +10,7 @@ CONFIG -= app_bundle
 INCLUDEPATH+=include
 
 SOURCES += \
-        Src/fichier_ppm.cpp \
+        Src/ppm_file.cpp \
         main.cpp
 
 # Default rules for deployment.
@@ -19,4 +19,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    include/fichier_ppm.h
+    include/ppm_file.h
+

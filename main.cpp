@@ -1,4 +1,4 @@
-#include "fichier_ppm.h"
+#include "ppm_file.h"
 #include <iostream>
 #include <fstream>
 

@@ -11,6 +11,7 @@
 
 using namespace std;
 
+// Checks if the file is in the PPM format, RGB 255.
 bool IsPPM_RGB(char *imageName)
 {
     bool isPPM(false);
@@ -55,6 +56,7 @@ bool IsPPM_RGB(char *imageName)
     return isPPM;
 }
 
+// Procedure that returns the dimensions height and width of the image.
 void ReadPPM_Dimensions(char *imageName, unsigned int &height, unsigned int &width)
 {
     char buffer[71];
@@ -77,6 +79,7 @@ void ReadPPM_Dimensions(char *imageName, unsigned int &height, unsigned int &wid
     myFile.close();
 }
 
+// Function that verifies if the dimensions of the image are identical.
 bool IsSameSize(char *imageName, unsigned int height, unsigned int width)
 {
     bool isSameSize(false);
@@ -97,6 +100,7 @@ bool IsSameSize(char *imageName, unsigned int height, unsigned int width)
     return isSameSize;
 }
 
+// Function to create a dynamic two-dimensional array.
 unsigned int **Create2DArray(unsigned int height, unsigned int width)
 {
     unsigned int **array(nullptr);
@@ -110,6 +114,7 @@ unsigned int **Create2DArray(unsigned int height, unsigned int width)
     return array;
 }
 
+// Function to combine RGB components into a single integer.
 unsigned int RGB(unsigned int red, unsigned int green, unsigned int blue)
 {
     unsigned int rgb(0);
@@ -123,6 +128,7 @@ unsigned int RGB(unsigned int red, unsigned int green, unsigned int blue)
     return rgb;
 }
 
+// Function that reads RGB values from the PPM file.
 void ReadImagePPM(char *imageName, unsigned int **wTab, unsigned int height, unsigned int width)
 {
     char buffer[71];
@@ -149,6 +155,7 @@ void ReadImagePPM(char *imageName, unsigned int **wTab, unsigned int height, uns
     myFile.close();
 }
 
+// Function to display ANSI colors
 void DisplayColor(unsigned int color)
 {
     if (color == RED)
@@ -166,6 +173,7 @@ void DisplayColor(unsigned int color)
     }
 }
 
+// Function to display the image from the wTab array.
 void DisplayImage(unsigned int **wTab, unsigned int height, unsigned int width)
 {
     for (unsigned int i = 0; i < height; ++i)
@@ -178,6 +186,7 @@ void DisplayImage(unsigned int **wTab, unsigned int height, unsigned int width)
     }
 }
 
+// Function to free the 2D array memory.
 unsigned int **Free2DArray(unsigned int **wTab, unsigned int height, unsigned int width)
 {
     if (wTab != nullptr)
