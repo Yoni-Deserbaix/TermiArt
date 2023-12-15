@@ -6,16 +6,14 @@ using namespace std;
 
 int main()
 {
-    // Return
     bool isFileVerified(false);
     bool areDimensionsVerified(false);
     unsigned int resultRGB(0);
     unsigned int **logoArray(nullptr);
 
-    // Parameters
 
     // Image file path
-    char *fileName = "C:\\YOUR FILE PPM"; // Select your file ppm
+    char *fileName = "C:\\YOUR FILE PPM"; // Select your ppm file
 
     // Variables to store image dimensions
     unsigned int height(0);

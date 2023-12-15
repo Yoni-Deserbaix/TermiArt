@@ -161,13 +161,16 @@ void DisplayColor(unsigned int color)
     if (color == RED)
     {
         cout << "\033[31m.\033[0m "; // RED
-    } else if (color == DARK_RED)
+    }
+    else if (color == DARK_RED)
     {
         cout << "\033[31;2m.\033[0m "; // Dark Red
-    } else if (color == WHITE)
+    }
+    else if (color == WHITE)
     {
         cout << "\033[37m.\033[0m "; // WHITE
-    } else
+    }
+    else
     {
         cout << " ";
     }
